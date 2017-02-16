@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Your Profile</title>
+    <style>
+      body {
+        position: absolute;
+        top: 0; bottom: 0; left: 0; right: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      h2 {
+        color: #09f;
+      }
+
+      .content {
+        flex: 1;
+      }
+
+      .field {
+        margin: 5px;
+        display: flex;
+        flex-direction: row;
+      }
+
+      .btns {
+        display: flex;
+        flex-direction: row;
+      }
+
+      span {
+        margin-right: 10px;
+      }
+
+      input {
+        flex: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>User Profile</h2>
+
+    <div class="content">
+      <div class="field">
+        <span>Name</span>
+        <input id="name"></input>
+      </div>
+
+      <div class="field">
+        <span>Email</span>
+        <input id="email"></input>
+      </div>
+    </div>
+
+    <div class="btns">
+      <span style="flex: 1"></span>
+      <button id="submit">Submit</button>
+    </div>
+
+    <script>
+      const profile = require('../../index');
+
+      let userInfo;
+
+      profile.load('profile://global/user.json', (err, info) => {
+        if ( err ) {
+          console.error(err);
+          return;
+        }
+
+        userInfo = info;
+        document.getElementById('name').value = info.data.name;
+        document.getElementById('email').value = info.data.email;
+      });
+
+      document.getElementById('submit').addEventListener('click', () => {
+        userInfo.data.name = document.getElementById('name').value;
+        userInfo.data.email = document.getElementById('email').value;
+        userInfo.save();
+      });
+    </script>
+  </body>
+</html>

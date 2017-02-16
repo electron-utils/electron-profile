@@ -1,7 +1,7 @@
 # electron-profile
 
 [![Linux Build Status](https://travis-ci.org/electron-utils/electron-profile.svg?branch=master)](https://travis-ci.org/electron-utils/electron-profile)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/ym6vcqcpqmv3dd34?svg=true)](https://ci.appveyor.com/project/jwu/electron-profile)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/xs18f8goees9w9bb?svg=true)](https://ci.appveyor.com/project/jwu/electron-profile)
 [![Dependency Status](https://david-dm.org/electron-utils/electron-profile.svg)](https://david-dm.org/electron-utils/electron-profile)
 [![devDependency Status](https://david-dm.org/electron-utils/electron-profile/dev-status.svg)](https://david-dm.org/electron-utils/electron-profile#info=devDependencies)
 

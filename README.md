@@ -10,7 +10,7 @@ Store and manipulate your profile for your Electron app.
 ## Why?
 
   - Profile migration/update
-  - Sync profile changes in runtime for all renderer processes and main process.
+  - Sync profile changes in runtime for all renderer processes.
 
 ## Install
 
@@ -36,7 +36,8 @@ settings.save();
 
 ## API Reference
 
-TODO
+  - [Module: profile (main process)](docs/profile-main.md)
+  - [Module: profile (renderer process)](docs/profile-renderer.md)
 
 ## License
 

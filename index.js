@@ -1,13 +1,13 @@
 'use strict';
 
 const platform = require('electron-platform');
-const fsJetpack = require('fs-jetpack');
 
 let profile;
 
 if ( platform.isMainProcess ) {
   const {app} = require('electron');
   const path = require('path');
+  const fsJetpack = require('fs-jetpack');
 
   profile = require('./lib/main');
 

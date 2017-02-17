@@ -28,3 +28,4 @@ profile
 # project files
 node_modules/
 bower_components/
+test/fixtures/profiles/

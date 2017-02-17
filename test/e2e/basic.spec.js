@@ -12,7 +12,7 @@ describe('electron', function () {
   before(function () {
     app = new Application({
       path: electron,
-      args: [path.join(__dirname, 'fixtures', 'app')]
+      args: [path.join(__dirname, '..', 'fixtures', 'app')]
     });
     return app.start();
   });

@@ -4,7 +4,7 @@
   "description": "Store and manipulate your profile for your Electron app.",
   "main": "index.js",
   "scripts": {
-    "start": "node run.js",
+    "start": "electron",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "electron-node-tap --preload ./test/unit/preload.js ./test/unit/*.spec.js",
     "test:e2e": "mocha ./test/e2e/*.spec.js"

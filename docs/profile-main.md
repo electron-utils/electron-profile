@@ -22,7 +22,7 @@ const profile = require('electron-profile');
 profile.register( 'project', '~/foo/bar');
 
 // load the profile at ~/foo/bar/foobar.json
-let foobar = Editor.loadProfile( 'profile://project/foobar.json', {
+let foobar = profile.load('profile://project/foobar.json', {
   foo: 'foo',
   bar: 'bar',
 });

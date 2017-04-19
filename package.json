@@ -1,6 +1,6 @@
 {
   "name": "electron-profile",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Store and manipulate your profile for your Electron app.",
   "main": "index.js",
   "scripts": {
@@ -24,15 +24,15 @@
   },
   "homepage": "https://github.com/electron-utils/electron-profile",
   "devDependencies": {
-    "electron": "^1.6.2",
+    "electron": "^1.6.5",
     "electron-node-tap": "^1.1.3",
     "mocha": "^3.2.0",
-    "spectron": "^3.6.0"
+    "spectron": "^3.6.1"
   },
   "dependencies": {
     "electron-ipc-plus": "^1.3.3",
     "electron-platform": "^1.2.0",
-    "electron-protocols": "^1.0.2",
-    "fs-jetpack": "^0.12.0"
+    "electron-protocols": "^1.0.4",
+    "fs-jetpack": "^0.13.3"
   }
 }

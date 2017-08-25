@@ -64,7 +64,7 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
 
     t.equal(info.data.name, 'johnny');
     t.equal(info.data.email, 'johnny@electron-utils.com');
-    t.equal(info.data.description, undefined);
+    t.equal(info.data.description, 'I\'m johnny');
     t.end();
   });
 
@@ -86,7 +86,7 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
 
     t.equal(info.data.name, 'johnny');
     t.equal(info.data.email, 'johnny@electron-utils.com');
-    t.equal(info.data.extra, 'foo');
+    t.equal(info.data.extra, false);
     t.end();
   });
 });

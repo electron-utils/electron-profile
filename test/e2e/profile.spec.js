@@ -111,4 +111,18 @@ describe('Profile manager', () => {
         Assert.equal(json.position, 'global');
 
     });
+
+    it('Profile update', () => {
+        var user = Profile.load('profile://global/user.json');
+
+        Profile.updateProfile({
+            id: 'user',
+            type: 'global',
+            source: { global: { name: '123' } },
+            default: {},
+        }, false);
+
+        Assert.equal(user.data.name, '123');
+        Assert.equal(user._source.global.name, '123');
+    });
 });

@@ -16,36 +16,36 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
       }, null, 2)
     );
 
-    let info = profile.load('profile://fixtures/profiles/user.json', {
+    let info = profile.load('profile://fixtures/profiles/user.json'/*, {
       name: 'jwu',
       email: 'jwu@e.com'
-    });
+    }*/);
 
     t.equal(info.get('name'), 'johnny');
     t.equal(info.get('email'), 'johnny@electron-utils.com');
     t.end();
   });
 
-  t.test('profile has less field than default', t => {
-    fs.writeFileSync(
-      `${__dirname}/../fixtures/profiles/user-01.json`,
-      JSON.stringify({
-        name: 'johnny',
-        email: 'johnny@electron-utils.com',
-      }, null, 2)
-    );
+  // t.test('profile has less field than default', t => {
+  //   fs.writeFileSync(
+  //     `${__dirname}/../fixtures/profiles/user-01.json`,
+  //     JSON.stringify({
+  //       name: 'johnny',
+  //       email: 'johnny@electron-utils.com',
+  //     }, null, 2)
+  //   );
 
-    let info = profile.load('profile://fixtures/profiles/user-01.json', {
-      name: 'jwu',
-      email: 'jwu@e.com',
-      description: 'I\'m jwu',
-    });
+  //   let info = profile.load('profile://fixtures/profiles/user-01.json', {
+  //     name: 'jwu',
+  //     email: 'jwu@e.com',
+  //     description: 'I\'m jwu',
+  //   });
 
-    t.equal(info.get('name'), 'johnny');
-    t.equal(info.get('email'), 'johnny@electron-utils.com');
-    t.equal(info.get('description'), 'I\'m jwu');
-    t.end();
-  });
+  //   t.equal(info.get('name'), 'johnny');
+  //   t.equal(info.get('email'), 'johnny@electron-utils.com');
+  //   t.equal(info.get('description'), 'I\'m jwu');
+  //   t.end();
+  // });
 
   t.test('profile has more fields than default', t => {
     fs.writeFileSync(
@@ -57,10 +57,10 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
       }, null, 2)
     );
 
-    let info = profile.load('profile://fixtures/profiles/user-02.json', {
+    let info = profile.load('profile://fixtures/profiles/user-02.json'/*, {
       name: 'jwu',
       email: 'jwu@e.com',
-    });
+    }*/);
 
     t.equal(info.get('name'), 'johnny');
     t.equal(info.get('email'), 'johnny@electron-utils.com');
@@ -78,11 +78,11 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
       }, null, 2)
     );
 
-    let info = profile.load('profile://fixtures/profiles/user-03.json', {
+    let info = profile.load('profile://fixtures/profiles/user-03.json'/*, {
       name: 'jwu',
       email: 'jwu@e.com',
       extra: 'foo',
-    });
+    }*/);
 
     t.equal(info.get('name'), 'johnny');
     t.equal(info.get('email'), 'johnny@electron-utils.com');

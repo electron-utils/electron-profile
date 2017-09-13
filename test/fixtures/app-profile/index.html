@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Electron App</title>
+  </head>
+
+  <body>
+    <div class="g-name">...</div>
+    <div class="l-name">...</div>
+    <div class="g-timestamp"></div>
+    <div class="l-timestamp"></div>
+  </body>
+
+  <script>
+    const profile = require('../../../index');
+    const global = profile.load('profile://global/user.json');
+    const local = profile.load('profile://local/user.json');
+
+    document.querySelector('.g-name').innerText = global.get('name');
+    document.querySelector('.l-name').innerText = local.get('name');
+    document.querySelector('.g-name').innerText = global.get('info.timestamp');
+    document.querySelector('.l-name').innerText = local.get('info.timestamp');
+  </script>
+</html>

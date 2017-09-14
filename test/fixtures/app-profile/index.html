@@ -6,20 +6,196 @@
   </head>
 
   <body>
-    <div class="g-name">...</div>
-    <div class="l-name">...</div>
-    <div class="g-timestamp"></div>
-    <div class="l-timestamp"></div>
+    <style>
+      td { padding: 0 10px; }
+    </style>
+    <table>
+      <script>
+        if (process.env['TEST'] === 'page') {
+          document.write(`
+            <tr>
+              <td>Test</td>
+              <td>State</td>
+              <td>Synchronization</td>
+            </tr>
+            <tr>
+              <td>profile.get</td>
+              <td class="get">Testing...</td>
+              <td class="get-sync">Waiting...</td>
+            </tr>
+            <tr>
+              <td>profile.set</td>
+              <td class="set">Testing...</td>
+              <td class="set-sync">Waiting...</td>
+            </tr>
+            <tr>
+              <td>profile.delete</td>
+              <td class="delete">Testing...</td>
+              <td class="delete-sync">Waiting...</td>
+            </tr>
+            <tr>
+              <td>profile.save</td>
+              <td class="save">Testing...</td>
+              <td class="save-sync">Waiting...</td>
+            </tr>
+            <tr>
+              <td>profile.clear</td>
+              <td class="clear">Testing...</td>
+              <td class="clear-sync">Waiting...</td>
+            </tr>
+            <tr>
+              <td>profile.reset</td>
+              <td class="reset">Testing...</td>
+              <td class="reset-sync">Waiting...</td>
+            </tr>
+          `);
+        }
+      </script>
+    </table>
   </body>
-
   <script>
-    const profile = require('../../../index');
-    const global = profile.load('profile://global/user.json');
-    const local = profile.load('profile://local/user.json');
+    let profile = require('../../../index');
+    let ipcPlus = require('electron-ipc-plus');
+    let fs = require('fs');
 
-    document.querySelector('.g-name').innerText = global.get('name');
-    document.querySelector('.l-name').innerText = local.get('name');
-    document.querySelector('.g-name').innerText = global.get('info.timestamp');
-    document.querySelector('.l-name').innerText = local.get('info.timestamp');
+    function innerText (selector, value) {
+      let dom = document.querySelector(selector);
+      dom.innerText = value;
+    };
+
+    let gUser = profile.load('profile://global/user.json');
+    let lUser = profile.load('profile://local/user.json');
+
+    const test = {
+      get () {
+        if (gUser.get('page.foo') !== true) {
+          console.error(new Error('Incorrect parameter: {global} page.foo '));
+          innerText('.get', 'Failure');
+          innerText('.get-sync', 'Skip');
+          return;
+        }
+        if (gUser.get('page.bar') !== true) {
+          console.error(new Error('Incorrect parameter: {global} page.foo '));
+          innerText('.get', 'Failure');
+          innerText('.get-sync', 'Skip');
+          return;
+        }
+        if (lUser.get('page.foo') !== true) {
+          console.error(new Error('Incorrect parameter: {local} page.foo '));
+          innerText('.get', 'Failure');
+          innerText('.get-sync', 'Skip');
+          return;
+        }
+        if (lUser.get('page.bar') !== false) {
+          console.error(new Error('Incorrect parameter: {local} page.foo '));
+          innerText('.get', 'Failure');
+          innerText('.get-sync', 'Skip');
+          return;
+        }
+        innerText('.get', 'Success');
+        innerText('.get-sync', 'Skip');
+      },
+
+      set () {
+        gUser.set('page.foo', false);
+        if (gUser.get('page.foo') !== false) {
+          console.error(new Error('Incorrect parameter: {global} page.foo '));
+          innerText('.set', 'Failure');
+          innerText('.set-sync', 'Skip');
+          return;
+        }
+        if (lUser.get('page.foo') !== false) {
+          console.error(new Error('Incorrect parameter: {global} page.foo '));
+          innerText('.set', 'Failure');
+          innerText('.set-sync', 'Skip');
+          return;
+        }
+        innerText('.set', 'Success');
+        ipcPlus.sendToMain('test-query-profile', 'global', 'page.foo', (error, value) => {
+          if (value === false) {
+            innerText('.set-sync', 'Success');
+          } else {
+            innerText('.set-sync', 'Failure');
+          }
+        });
+      },
+
+      delete () {
+        gUser.delete('page.foo');
+        if (gUser.get('page.foo') !== null) {
+          console.error(new Error('Incorrect parameter: {global} page.foo '));
+          innerText('.delete', 'Failure');
+          innerText('.delete-sync', 'Skip');
+          return;
+        }
+        innerText('.delete', 'Success');
+        ipcPlus.sendToMain('test-query-profile', 'global', 'page.foo', (error, value) => {
+          if (value === null) {
+            innerText('.delete-sync', 'Success');
+          } else {
+            innerText('.delete-sync', 'Failure');
+          }
+        });
+      },
+
+      save() {
+        gUser.delete('page');
+        gUser.save();
+        let json = JSON.parse(fs.readFileSync(`${__dirname}/../global/user.json`, 'utf-8'));
+        if ('page' in json) {
+          innerText('.save', 'Failure');
+        } else {
+          innerText('.save', 'Success');
+        }
+        innerText('.save-sync', 'Skip');
+      },
+
+      clear () {
+        lUser.clear();
+        if (lUser.get('page.foo') !== null) {
+          console.error(new Error('Incorrect parameter: {global} page.foo '));
+          innerText('.clear', 'Failure');
+          innerText('.clear-sync', 'Skip');
+          return;
+        }
+        innerText('.clear', 'Success');
+        ipcPlus.sendToMain('test-query-profile', 'local', 'page.foo', (error, value) => {
+          if (value === null) {
+            innerText('.clear-sync', 'Success');
+          } else {
+            innerText('.clear-sync', 'Failure');
+          }
+        });
+      },
+
+      reset () {
+        lUser.reset({
+          page: { foo: true },
+        });
+        if (lUser.get('page.foo') !== true) {
+          console.error(new Error('Incorrect parameter: {global} page.foo '));
+          innerText('.reset', 'Failure');
+          innerText('.reset-sync', 'Skip');
+          return;
+        }
+        innerText('.reset', 'Success');
+        ipcPlus.sendToMain('test-query-profile', 'local', 'page.foo', (error, value) => {
+          if (value === true) {
+            innerText('.reset-sync', 'Success');
+          } else {
+            innerText('.reset-sync', 'Failure');
+          }
+        });
+      },
+    };
+
+    if (process.env['TEST'] === 'page') {
+      test.get();
+      test.set();
+      test.delete();
+      test.save();
+      test.clear();
+      test.reset();
+    }
   </script>
 </html>

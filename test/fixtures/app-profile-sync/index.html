@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Electron App</title>
+  </head>
+
+  <body>
+    <div class="label">Testing...</div>
+    <script>
+      const ipcPlus = require('electron-ipc-plus');
+      const profile = require('../../../index');
+
+      let user = profile.load('profile://local/user.json');
+
+      let handler = function () {
+        let text = user.get('test');
+        document.querySelector('.label').innerText = text;
+      };
+
+      user.on('change', handler);
+
+      ipcPlus.sendToMain('ready');
+
+      ipcPlus.on('change-profile', () => {
+        user.removeListener('change', handler);
+        user.set('test', 'Success');
+        console.log('Updated')
+        document.querySelector('.label').innerText = 'Updated';
+      });
+    </script>
+  </body>
+</html>

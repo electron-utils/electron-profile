@@ -21,8 +21,8 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
       email: 'jwu@e.com'
     });
 
-    t.equal(info.data.name, 'johnny');
-    t.equal(info.data.email, 'johnny@electron-utils.com');
+    t.equal(info.get('name'), 'johnny');
+    t.equal(info.get('email'), 'johnny@electron-utils.com');
     t.end();
   });
 
@@ -41,9 +41,9 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
       description: 'I\'m jwu',
     });
 
-    t.equal(info.data.name, 'johnny');
-    t.equal(info.data.email, 'johnny@electron-utils.com');
-    t.equal(info.data.description, 'I\'m jwu');
+    t.equal(info.get('name'), 'johnny');
+    t.equal(info.get('email'), 'johnny@electron-utils.com');
+    t.equal(info.get('description'), 'I\'m jwu');
     t.end();
   });
 
@@ -62,9 +62,9 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
       email: 'jwu@e.com',
     });
 
-    t.equal(info.data.name, 'johnny');
-    t.equal(info.data.email, 'johnny@electron-utils.com');
-    t.equal(info.data.description, undefined);
+    t.equal(info.get('name'), 'johnny');
+    t.equal(info.get('email'), 'johnny@electron-utils.com');
+    t.equal(info.get('description'), 'I\'m johnny');
     t.end();
   });
 
@@ -84,9 +84,9 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
       extra: 'foo',
     });
 
-    t.equal(info.data.name, 'johnny');
-    t.equal(info.data.email, 'johnny@electron-utils.com');
-    t.equal(info.data.extra, 'foo');
+    t.equal(info.get('name'), 'johnny');
+    t.equal(info.get('email'), 'johnny@electron-utils.com');
+    t.equal(info.get('extra'), false);
     t.end();
   });
 });

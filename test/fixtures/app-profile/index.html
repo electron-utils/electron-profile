@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Electron App</title>
+  </head>
+
+  <body>
+    <style>
+      td { padding: 0 10px; }
+    </style>
+    <table>
+      <script>
+        document.write(`
+          <tr>
+            <td>Test</td>
+            <td>State</td>
+          </tr>
+          <tr>
+            <td>profile load</td>
+            <td class="load">Testing...</td>
+          </tr>
+          <tr>
+            <td>profile sync</td>
+            <td class="sync">Testing...</td>
+          </tr>
+        `);
+      </script>
+    </table>
+  </body>
+  <script>
+    let profile = require('../../../index');
+    let ipcPlus = require('electron-ipc-plus');
+    let fs = require('fs');
+
+    function displayResult (selector, bool) {
+      let dom = document.querySelector(selector);
+      if (bool === true) {
+        dom.innerText = 'Success';
+      } else if (bool === false) {
+        dom.innerText = 'Failure';
+      } else {
+        dom.innerText = 'Skip';
+      }
+    };
+
+    let gUser = profile.load('profile://global/user.json');
+
+    Promise.resolve()
+      .then(() => {
+        console.log(gUser.data.name);
+        displayResult('.load', gUser && gUser.data && gUser.data.name === 'VisualSJ');
+      })
+      .then(() => {
+        let timer = setTimeout(() => {
+          gUser.removeListener('changed', handler);
+          displayResult('.sync', false);
+        }, 500);
+        let handler = function () {
+          clearTimeout(timer);
+          console.log(123);
+          displayResult('.sync', true);
+          gUser.removeListener('changed', handler);
+        };
+        gUser.on('changed', handler);
+        ipcPlus.sendToMain('modify-profile', 'profile://global/user.json', 'name', 'v...');
+      });
+    
+  </script>
+</html>

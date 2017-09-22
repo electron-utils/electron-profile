@@ -18,7 +18,7 @@ app.on('ready', function () {
   win.loadURL('file://' + __dirname + '/index.html');
 });
 
-ipcPlus.on('modify-profile', (event, url, key, value) => {
+ipcPlus.on('change-profile-in-main-process', (event, url, key, value) => {
   let item = profile.load(url);
   item.data[key] = value;
   item.save();

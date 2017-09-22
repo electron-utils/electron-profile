@@ -9,7 +9,7 @@ const assert = require('assert');
 describe('renderer profile', () => {
 
   let DIR = {
-    GLOBAL: path.join(__dirname, '../fixtures/app-profile/global'),
+    GLOBAL: path.join(__dirname, '../fixtures/profile-renderer/global'),
   };
 
   let FILE = {
@@ -30,7 +30,7 @@ describe('renderer profile', () => {
 
     app = new Application({
       path: electron,
-      args: [path.join(__dirname, '..', 'fixtures', 'app-profile')]
+      args: [path.join(__dirname, '..', 'fixtures', 'profile-renderer')]
     });
     return app.start();
   });

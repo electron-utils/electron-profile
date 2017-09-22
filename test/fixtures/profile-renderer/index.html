@@ -63,7 +63,7 @@
           gUser.removeListener('changed', handler);
         };
         gUser.on('changed', handler);
-        ipcPlus.sendToMain('modify-profile', 'profile://global/user.json', 'name', 'v...');
+        ipcPlus.sendToMain('change-profile-in-main-process', 'profile://global/user.json', 'name', 'v...');
       });
     
   </script>

@@ -48,22 +48,22 @@
 
     Promise.resolve()
       .then(() => {
-        console.log(gUser.data.name);
-        displayResult('.load', gUser && gUser.data && gUser.data.name === 'VisualSJ');
+        console.log(gUser.get('name'));
+        displayResult('.load', gUser && gUser.get('name') === 'VisualSJ');
       })
       .then(() => {
+        let name = 'v...';
         let timer = setTimeout(() => {
           gUser.removeListener('changed', handler);
           displayResult('.sync', false);
         }, 500);
         let handler = function () {
           clearTimeout(timer);
-          console.log(123);
-          displayResult('.sync', true);
+          displayResult('.sync', gUser.get('name') == name);
           gUser.removeListener('changed', handler);
         };
         gUser.on('changed', handler);
-        ipcPlus.sendToMain('change-profile-in-main-process', 'profile://global/user.json', 'name', 'v...');
+        ipcPlus.sendToMain('change-profile-in-main-process', 'profile://global/user.json', 'name', name);
       });
     
   </script>

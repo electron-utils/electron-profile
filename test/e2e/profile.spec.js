@@ -6,7 +6,8 @@ const electron = require('electron');
 const { Application } = require('spectron');
 const assert = require('assert');
 
-describe('renderer profile', () => {
+describe('renderer profile', function () {
+  this.timeout(0);
 
   let DIR = {
     GLOBAL: path.join(__dirname, '../fixtures/profile-renderer/global'),

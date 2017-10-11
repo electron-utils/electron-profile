@@ -11,19 +11,17 @@ suite(tap, 'profile operation', { timeout: 2000 }, t => {
   fsJetpack.dir(dir);
 
   let json = {
-    email: 'v@electron-utils.com',
-    info: {
-      foo: 'bar',
-    }
+    'email': 'v@electron-utils.com',
+    'info.foo': 'bar',
   };
 
   fsJetpack.write(jsonPath, json);
   let email = profile.load('profile://fixtures/profiles/email.json');
 
   t.test('profile.get', (t) => {
-    t.equal(email.get('email'), json.email);    
-    t.equal(email.get('info.foo'), json.info.foo);
-    t.equal(email.get('info.a.b.c'), null);
+    t.equal(email.get('email'), json['email']);    
+    t.equal(email.get('info.foo'), json['info.foo']);
+    t.equal(email.get('info.a.b.c'), undefined);
     t.end();
   });
 
@@ -39,14 +37,12 @@ suite(tap, 'profile operation', { timeout: 2000 }, t => {
     t.end();
   });
 
-  t.test('profile.delete', (t) => {
-    email.delete('info.foo');
-    t.equal(email.get('info.foo'), null);
-    email.delete('info');
-    t.equal(email.get('info'), null);
-    t.equal(email.get('info.foo'), null);
-    email.delete('a');
-    t.equal(email.get('a.b.c.d'), null);
+  t.test('profile.remove', (t) => {
+    email.remove('info.foo');
+    t.equal(email.get('info.foo'), undefined);
+    email.remove('info');
+    t.equal(email.get('info'), undefined);
+    t.equal(email.get('info.foo'), undefined);
     t.end();
   });
 

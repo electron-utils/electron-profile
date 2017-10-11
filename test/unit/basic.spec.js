@@ -44,7 +44,7 @@ suite(tap, 'profile.load', {timeout: 2000}, t => {
     t.equal(info.get('name'), 'johnny');
     t.equal(info.get('email'), 'johnny@electron-utils.com');
     // t.equal(info.get('description'), 'I\'m jwu');
-    t.equal(info.get('description'), null);
+    t.equal(info.get('description'), undefined);
     t.end();
   });
 

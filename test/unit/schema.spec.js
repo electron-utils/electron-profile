@@ -23,7 +23,7 @@ suite(tap, 'profile schema', { timeout: 2000 }, t => {
       'number': 0,
       'boolean': true
   };
-  profile.setSchema('profile://fixtures/profiles/type.json', schema);
+  profile.registerSchema('profile://fixtures/profiles/type.json', schema);
 
   t.test('profile.get', (t) => {
     t.equal(type.get('default'), json['default']);
@@ -43,8 +43,8 @@ suite(tap, 'profile schema', { timeout: 2000 }, t => {
     t.end();
   });
 
-  t.test('profile.delete', (t) => {
-    type.delete('string');
+  t.test('profile.remove', (t) => {
+    type.remove('string');
     t.equal(type.get('string'), schema['string']);
     t.end();
   });

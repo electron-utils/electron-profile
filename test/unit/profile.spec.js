@@ -37,10 +37,10 @@ suite(tap, 'profile operation', { timeout: 2000 }, t => {
     t.end();
   });
 
-  t.test('profile.delete', (t) => {
-    email.delete('info.foo');
+  t.test('profile.remove', (t) => {
+    email.remove('info.foo');
     t.equal(email.get('info.foo'), undefined);
-    email.delete('info');
+    email.remove('info');
     t.equal(email.get('info'), undefined);
     t.equal(email.get('info.foo'), undefined);
     t.end();

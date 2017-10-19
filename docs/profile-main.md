@@ -2,16 +2,16 @@
 
 ## Methods
 
-### profile.load (url, defaultProfile)
+### profile.load (url)
 
   - `url` string - The url of the profile.
-  - `defaultProfile` object - The default profile to use if the profile is not found.
 
 Returns `_Profile` - The Profile instance.
 
 
-Load profile via `url`, if no profile found, it will use the `defaultProfile` and save it to the disk.
+Load profile via `url`.
 You must register your profile path via `profile.register` before you can use it.
+You also can set a schema for your profile via `profile.registerSchema`. NOTE: only root profile have the schema.
 
 Example:
 
@@ -22,13 +22,15 @@ const profile = require('electron-profile');
 profile.register( 'project', '~/foo/bar');
 
 // load the profile at ~/foo/bar/foobar.json
-let foobar = profile.load('profile://project/foobar.json', {
+let foobar = profile.load('profile://project/foobar.json');
+
+profile.registerSchema({
   foo: 'foo',
   bar: 'bar',
 });
 
 // change and save your profile
-foobar.data.foo = 'hello foo';
+foobar.set('foo', 'hello foo');
 foobar.save();
 ```
 
@@ -38,6 +40,13 @@ foobar.save();
   - `path` string - The path for the register type.
 
 Register profile `type` with the `path` you provide.
+
+### profile.inherit
+
+  - `type` string - Current type
+  - `parent` string - The parent type
+
+Sets the parent of the given type. This allows you get profile value from your parent (even parent's parent profile) when the value not found in current profile.
 
 ### profile.reset ()
 
@@ -49,20 +58,28 @@ Reset the registered profiles
 
 Get the registered path by `type`.
 
-### profile.setDefault (url, defaultProfile)
+### profile.registerSchema (url, json)
 
   - `url` string - The url of the profile.
-  - `defaultProfile` object - The default profile to use if the profile is not found.
+  - `json` object - Restricted input type, And the default profile to use if the profile is not found.
 
-Cache the default profile.
+Set a schema for profile. And the schema data to use if the profile is not found.
+NOTE: only root profile have the schema.
 
 ## Class: _Profile
 
 ## Instance Properties
 
-### profileInst.data
+### profileInst.get (key)
 
-The data of the profile.
+  - `key` string - Data key value
+
+Gets the stored data.
+
+### profileInst.set (key, value)
+
+  - `key` string - Data key value
+  - `value` Profile data
 
 ## Instance Methods
 
@@ -73,6 +90,10 @@ The data of the profile.
 ### profileInst.clear()
 
 ### profileInst.reset(data)
+
+### profileInst.getSchema()
+
+Gets the schema currently in effect.
 
 ## Instance Events
 

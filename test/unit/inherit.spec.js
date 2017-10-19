@@ -11,7 +11,9 @@ suite(tap, 'profile inherit', { timeout: 2000 }, t => {
   fsJetpack.dir(local);
 
   profile.register('global', global);
-  profile.register('local', local, 'global');
+  profile.register('local', local);
+
+  profile.inherit('local', 'global');
 
   let globalJson = {
     foo: 'foo',

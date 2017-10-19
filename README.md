@@ -30,7 +30,8 @@ npm start examples/${name}
 const profile = require('electron-profile');
 
 let settings = profile.load('profile://local/settings.json');
-settings.data.user = 'Johnny Wu';
+settings.set('user.name', 'Johnny Wu');
+console.log(settings.get('user.name')); // Johnny Wu
 settings.save();
 ```
 
